@@ -3,18 +3,19 @@ title: "banuls_marc_ADO_PEC1"
 author: "Marc Bañuls Tornero"
 date: "17/4/2020"
 output:
+  html_document:
+    toc: TRUE
   pdf_document:
     toc: TRUE
     fig_caption: yes
     includes:  
       in_header: header.tex
-  html_document:
-    toc: TRUE
 fig_width: 500 
 fig_height: 350
 bibliography: bibliography.bib
 ---
 ```{r, include= FALSE}
+chooseCRANmirror(graphics=FALSE, ind=1)
 install.packages("knitr")
 install.packages("gplots")
 
