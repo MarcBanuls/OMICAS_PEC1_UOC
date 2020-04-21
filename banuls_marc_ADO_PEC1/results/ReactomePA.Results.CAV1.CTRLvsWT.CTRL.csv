@@ -1,0 +1,2 @@
+"ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"R-MMU-453279","Mitotic G1-G1/S phases","13/255","126/8772",7.14323534787607e-05,0.0463595974077157,0.0423330684300445,"Akt3/Cdc25a/Mcm5/Ppp2r1b/Psmb10/Ccne2/Psme1/Cdk6/Psmb9/Ccnd1/Mcm3/Ccnd2/Psmb8",13

@@ -1,0 +1,13 @@
+FileName;Group;Genotype;Treatment;ShortName
+GSM4075756_Meyer_270213_6-sicav_+48h_TGFbeta-I_MoGene-1_0-st-v1_.CEL;TGF;CAV1;48-Hours with TGF-B;CAV1.TGF.1
+GSM4075757_Meyer_270213_12-sicav_+48h_TGFbeta-III_MoGene-1_0-st-v1_.CEL;TGF;CAV1;48-Hours with TGF-B;CAV1.TGF.2
+GSM4075758_Meyer_270213_18-sicav_+48h_TGFbeta-IV_MoGene-1_0-st-v1_.CEL;TGF;CAV1;48-Hours with TGF-B;CAV1.TGF.3
+GSM4075759_Meyer_270213_4-sicav_48h-I_MoGene-1_0-st-v1_.CEL;CTRL;CAV1;No treatment;CAV1.CTRL.1
+GSM4075760_Meyer_270213_10-sicav_48h-III_MoGene-1_0-st-v1_.CEL;CTRL;CAV1;No treatment;CAV1.CTRL.2
+GSM4075761_Meyer_270213_16-sicav_48h-IV_MoGene-1_0-st-v1_.CEL;CTRL;CAV1;No treatment;CAV1.CTRL.3
+GSM4075762_Meyer_270213_5-sico_+48h_TGFbeta-I_MoGene-1_0-st-v1_2.CEL;TGF;WT;48-Hours with TGF-B;WT.TGF.1
+GSM4075763_Meyer_270213_11-sico_+48h_TGFbeta-III_MoGene-1_0-st-v1_.CEL;TGF;WT;48-Hours with TGF-B;WT.TGF.2
+GSM4075764_Meyer_270213_17-sico_+48h_TGFbeta-IV_MoGene-1_0-st-v1_.CEL;TGF;WT;48-Hours with TGF-B;WT.TGF.3
+GSM4075765_Meyer_270213_3-sico_48h-I_MoGene-1_0-st-v1_.CEL;CTRL;WT;No treatment;WT.CTRL.1
+GSM4075766_Meyer_270213_9-sico_48h-III_MoGene-1_0-st-v1_.CEL;CTRL;WT;No treatment;WT.CTRL.2
+GSM4075767_Meyer_270213_15-sico_48h-IV_MoGene-1_0-st-v1_.CEL;CTRL;WT;No treatment;WT.CTRL.3
