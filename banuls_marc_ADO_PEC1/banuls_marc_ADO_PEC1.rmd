@@ -14,6 +14,29 @@ fig_width: 500
 fig_height: 350
 bibliography: bibliography.bib
 ---
+```{r, include= FALSE}
+install.packages("knitr")
+install.packages("gplots")
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("Biobase")
+BiocManager::install("arrayQualityMetrics")
+BiocManager::install("affy")
+BiocManager::install("oligo")
+BiocManager::install("oligoClasses")
+BiocManager::install("pd.mogene.1.0.st.v1")
+BiocManager::install("mogene10sttranscriptcluster.db")
+BiocManager::install("genefilter")
+BiocManager::install("limma")
+BiocManager::install("GEOquery")
+BiocManager::install("annotate")
+BiocManager::install("AnnotationDbi")
+BiocManager::install("org.Mm.eg.db")
+BiocManager::install("ReactomePA")
+BiocManager::install("reactome.db")
+```
 
 
 ```{r , include =FALSE}
