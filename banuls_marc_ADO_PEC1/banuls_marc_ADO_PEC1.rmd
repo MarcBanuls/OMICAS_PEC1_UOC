@@ -3,15 +3,15 @@ title: "banuls_marc_ADO_PEC1"
 author: "Marc Bañuls Tornero"
 date: "17/4/2020"
 output:
+  html_document:
+    toc: TRUE
   pdf_document:
     toc: TRUE
     fig_caption: yes
     includes:  
       in_header: header.tex
-  html_document:
-    toc: TRUE
-fig_width: 400 
-fig_height: 300
+fig_width: 300 
+fig_height: 250
 bibliography: bibliography.bib
 ---
 
@@ -157,6 +157,7 @@ arrayQualityMetrics(eset_rma, outdir = file.path("./results", "ArrayQualityMetri
 
 ### Filtraje no específico    
 
+
 Realizamos un filtraje de los genes mediante el paquete *genefilter* (@genefilter)  que menos variación tengan o que no estén anotados adecuadamente a partir de las muestras normalizadas, para así facilitar los posteriores análisis. De esta manera obtenemos las muestras normalizadas y filtradas (eliminando IDs no anotados correctamente). 
 
 ```{r , include =FALSE}
@@ -181,14 +182,17 @@ write.csv2(exprs(eset_filtered), file = "./results/normalized_filt_data.csv")
 ### Identificación de genes diferencialmente expresados   
 
 
+
 Para encontrar los genes diferencialmente expresados debemos observar los genes que presentan diferencias entre los distintos grupos. Para ello, podemos crear una gráfica de variabilidad de cada gen entre los distintos grupos utilizando la desviación estándar de estos genes como referencia de variabilidad. Para encontrar los genes más diferencialmente expresados, podemos filtrar por aquellos que tienen una desviación estándar mayor al 90-95% de las desviaciones estándar.
 
 ### Selección de genes diferencialmente expresados   
+
 
 Para realizar la selección de los genes que se encuentran diferencialmente expresados nos basamos en la utilización del paquete *limma* (@limma) para construir un modelo lineal.
 
 
 #### Matriz de diseño   
+
 
 
 Primero hemos de construir una matriz de diseño. Como se sugiere en el manual de *limma*, interpretaremos los grupos del estudio como un modelo de un factor con 4 niveles:
@@ -211,7 +215,8 @@ rownames(design.l) <- c("CAV1.TGF.1", "CAV1.TGF.2", "CAV1.TGF.3", "CAV1.CTRL.1",
 print(design.l)
 ```
 
-#### Contrastes
+#### Contrastes   
+
 A partir de esta matriz de diseño ya podemos formular las comparaciones entre grupos convenientes. Para ello, utilizaremos matrices de contrastes. Las comparaciones que queremos hacer es:
 - ¿Hay diferencias entre las células con el gen CAV1 silenciado y las que no lo tienen cuando son tratadas con TGF-B?
 - ¿Hay diferencias entre las células con el gen CAV1 silenciado y las que no lo tienen cuando no son tratadas con TGF-B?
@@ -231,6 +236,7 @@ print(cont.matrix)
 De esta manera observaremos el efecto de tratar las células con TGF-B durante 48 horas o no realizar este tratamiento en las células que tienen o no silenciado el gen CAV1, y la interacción entre las células con el gen CAV1 silenciado y el haberla tratado o no. 
 
 #### Estimación del modelo y selección de genes   
+
 
 
 Pasamos a estimar los modelos y contrastes junto con la realización de pruebas de significación, utilizando el método implementado en el paquete *limma*, el cual utiliza el análisis mediante Bayes empírico.
@@ -255,6 +261,7 @@ topTab_INT <- topTable(fit.main, number = nrow(fit.main), coef = "INT", adjust =
 
 
 ### Anotación de los resultados   
+
 
 
 Teniendo todos los genes cuya expresión ha sido más significativa en los contrastes realizados, debemos identificarlos correctamente. Para ello, utilizamos la función creada y suministrada en el material del curso (@alex), y guardamos los genes con sus valores en nuevas tablas.
@@ -286,6 +293,7 @@ write.csv2(topAnnotated_INT, file="./results/topAnnotated_INT.csv")
 ## Comparaciones múltiples   
 
 
+
 Para realizar comparaciones múltiples utilizamos también el paquete *limma*. De esta manera, podemos observar el número de genes que se han visto "down-regulated" o "up-regulated" (o sin diferencias significativas) en cada comparación. 
 ```{r , include= FALSE}
 res <- decideTests(fit.main, method = "separate", adjust.method = "fdr", p.value = 0.1, lfc = 1)
@@ -294,7 +302,8 @@ res.selected<-res[sum.res.rows!=0,]
 ```
 
 
-### Análisis de significación biológica   
+### Análisis de significación biológica    
+
 
 
 con las comparaciones de genes podemos interpretar como afectan los genes con significación dentro del contexto biológico. Para ello, utilizamos el paquete ReactomePA de Bioconductor. En este análisis reslizamos una selección poco restrictiva de los genes diferencialmente expresados para poder tener una cantidad de genes aceptable para analizar. Para ello preparamos la lista de genes para analizar y utilizaremos como universo todos los genes que tengan almenos alguna anotación en Gene Ontology. Para realizar este proceso utilizamos el paquete *AnnotationDbi* (@annotation).   
@@ -370,6 +379,7 @@ for (i in 1:length(listOfData)){
 
 ### Tablas resumen del análisis de outliers   
 
+
 Durante el control de calidad de los datos crudos hemos observado que existen varios arrays que presentan outliers pero sólo en uno de los tres métodos de análisis utilizados por el paquete. Concretamente los outliers aparecen en los gráficos "MA". Al no corroborarse la detección de outliers en los distintos arrays por más de un método, podemos proseguir con la normalización.
 
 ```{r, fig.cap="Detección de outliers en los microarrays del estudio con datos crudos", echo=FALSE}
@@ -382,7 +392,8 @@ En el control de calidad de los datos normalizados no se observa ningún tipo de
 knitr::include_graphics("figures/QualityNormdata.PNG")
 ```
 
-### Gráficos PCA
+### Gráficos PCA   
+
 También podemos observar en los gráficos PCA generados en cada análisis de detección de outliers de los datos crudos y normalizados:
 
 ```{r, fig.cap="Detección de outliers mediante PCA", echo=FALSE}
@@ -391,7 +402,8 @@ knitr::include_graphics(c("figures/PCAraw.PNG","figures/PCAnorm.PNG"))
 
 En ambos gráficos PCA no observamos ninguna anormalidad que nos indique alguna variación de outliers.
 
-### Boxplots
+### Boxplots   
+
 
 Por último observamos mediante gráficos de boxplot en ambos datos (crudos y normalizados) la presencia de outliers:
 ```{r, fig.cap="Detección de outliers en datos crudos mediante boxplots", echo=FALSE}
@@ -403,9 +415,11 @@ knitr::include_graphics("figures/BoxNorm.PNG")
 ```
 Tampoco observamos ningún outlier significativo en los gráficos de cajas, tanto para los datos crudos como para los normalizados, por lo que podemos proseguir con seguridad con el análisis del estudio.
 
-## Genes diferencialmente expresados
+## Genes diferencialmente expresados   
 
-### Genes con mayor variabilidad
+
+### Genes con mayor variabilidad   
+
 
 En este gráfico podemos hacernos una idea de los genes con mayor variabilidad:
 
@@ -419,7 +433,8 @@ abline(v = length(sds) * c(0.9, 0.95))
 Observamos que de los 35000 genes del estudio, tan solo unos 2000 tienen una desviación estándar entre los percentiles al 90-95%.
 
 
-### Gráficos de volcán
+### Gráficos de volcán   
+
 Después de normalizar los datos pasamos y encontrar los genes diferencialmente expresados pasamos a observar los genes diferencialmente expresados en cada comparación. Podemos realizar un gráfico de volcán para observar qué genes son los que están más (o menos) diferencialmente expresados:
 
 ```{r, echo= FALSE, warning= FALSE, message= FALSE, fig.cap="Detección de genes diferencialmente expresados en las distintas comparaciones", echo=FALSE}
@@ -442,7 +457,8 @@ abline(v=c(-1,1))
 
 ```
 
-### Mapa de calor
+### Mapa de calor   
+
 Ahora realizamos un mapa de calor para observar qué genes son los más o menos expresados y su comparación con los otros grupos (escogemos los genes que han estado diferenciamente expresados en almenos una comparación):
 
 ```{r, include= FALSE}
@@ -479,7 +495,7 @@ heatmap.2(HMdata,
 
 De esta manera observamos una elevada cantidad de genes que están inhibidos en las muestras no tratadas y expresados en las muestras tratadas (donde se encuentra una mayor diferenciación en las células con el gen CAV1 inhibido) gracias a la observación de la expresión positiva o negativa mediante código de colores (azul para expresión baja y rojo para sobre-expresión).
 
-### Diagrama de Venn
+### Diagrama de Venn   
 
 Construimos una matriz con los genes significativos entre las comparaciones para observar la cantidad de genes sobre-expresados o inhibidos en cada comparación.
 
@@ -497,7 +513,8 @@ vennDiagram (res.selected[,1:3], cex = 0.9)
 ```
 
 
-## Análisis de significación biológica
+## Análisis de significación biológica   
+
 
 Finalmente, para obtener resultados de significación biológica a partir de los arrays analizados, hemos realizado un análisis de enriquecimiento con un nivel de significación del 5%. Como la comparación entre las dos primeras comparaciones (llamada "INT") no tiene valores por encima de este nivel de significación, no podemos realizar un análisis de enriquecimiento para ésta. Por ello, mostramos las tablas con las rutas metabólicas en las dos primeras comparaciones, mostrando sólo las cinco primeras rutas metabólicas significativas:
 
@@ -537,7 +554,8 @@ knitr::include_graphics("figures/cnetCAV1.TGFvsWT.TGF.PNG")
 
 De esta manera podemos observar qué genes afectan a qué ruta metabolica significativamente.
 
-## Resumen de archivos obtenidos
+## Resumen de archivos obtenidos   
+
 Aqui ponemos la tabla resumen con los datos y los distintos gráficos y tablas obtenidos:
 
 ```{r listOfFiles, echo=FALSE}
@@ -549,20 +567,24 @@ knitr::kable(
 )
 ```
 
-# Discusión
+# Discusión   
+
 Para obtener unos resultados con mayor fiabilidad sería recomendable utilizar una mayor cantidad de muestras, lo cual nos daría un mayor número de datos en los que confirmar las significaciones biológicas entre comparaciones.
 
 
-# Conclusión
+# Conclusión   
+
 
 A partir de los datos del análisis de signficación biológica hemos observado que solo hay diferencias signficativas en una ruta metabólica entre los dos tipos distintos de células que no han sido tratadas con TGF-B. Aunque estamos hablando de una sola ruta metabólica, al ser concretamente la ruta de la fase de mitosis entre G1 y G1-S, un cambio significativo en esta fase puede afectar en gran medida al desarrollo celular y del organismo. Por ello, es una ruta metabólica a tener muy en cuenta y al que se podría investigar en más detalle qué efecto tiene la inhibición del gen CAV1 en esta ruta metabólica.   
 
 En la tabla de significación biológica de la comparación de los dos tipos distintos de células cuando se han tratado con TGF-B se observan concretamente doce rutas metabólicas que se ven significativamente afectadas, indicando que en una situación de presencia de TGF-B, las células se comportan de manera distinta cuando tienen (o no) el gen CAV1 silenciado. Debido a la gran cantidad de rutas metabólicas afectadas y las posibles relaciones o interacciones entre ellas, no me veo con conocimientos necesarios para dar unas conclusiones de los datos detalladas o certeras. POr ello, tan solo se puede concluir en este informe en que se han observado unas claras diferencias en la comparación CAV1.TGFvsWT.TGF las cuales merecen un estudio más detallado.
 
-# Apéndice
+# Apéndice   
+
 
 Todo el código utilizado se encuentra en el archivo ".rmd" en el repositorio github de la PEC1.
 
 
-# References
+# References   
+
 
