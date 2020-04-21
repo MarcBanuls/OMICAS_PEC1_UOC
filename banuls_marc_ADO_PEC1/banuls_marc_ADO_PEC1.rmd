@@ -3,45 +3,24 @@ title: "banuls_marc_ADO_PEC1"
 author: "Marc Bañuls Tornero"
 date: "17/4/2020"
 output:
-  html_document:
-    toc: TRUE
   pdf_document:
     toc: TRUE
     fig_caption: yes
     includes:  
       in_header: header.tex
-fig_width: 500 
-fig_height: 350
+  html_document:
+    toc: TRUE
+fig_width: 400 
+fig_height: 300
 bibliography: bibliography.bib
 ---
-```{r, include= FALSE}
-chooseCRANmirror(graphics=FALSE, ind=1)
-install.packages("knitr")
-install.packages("gplots")
 
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-
-BiocManager::install("Biobase")
-BiocManager::install("arrayQualityMetrics")
-BiocManager::install("affy")
-BiocManager::install("oligo")
-BiocManager::install("oligoClasses")
-BiocManager::install("pd.mogene.1.0.st.v1")
-BiocManager::install("mogene10sttranscriptcluster.db")
-BiocManager::install("genefilter")
-BiocManager::install("limma")
-BiocManager::install("GEOquery")
-BiocManager::install("annotate")
-BiocManager::install("AnnotationDbi")
-BiocManager::install("org.Mm.eg.db")
-BiocManager::install("ReactomePA")
-BiocManager::install("reactome.db")
-```
 
 
 ```{r , include =FALSE}
 #packages
+library(knitr)
+library(kableExtra)
 library(Biobase)
 library(arrayQualityMetrics)
 library(affy)
@@ -509,9 +488,11 @@ Tab.react_CAV1.TGFvsWT.TGF <- read.csv2(file.path("./results/ReactomePA.Results.
 Tab.react_CAV1.CTRLvsWT.CTRL <- Tab.react_CAV1.CTRLvsWT.CTRL[1:4, 1:5]
 Tab.react_CAV1.TGFvsWT.TGF <- Tab.react_CAV1.TGFvsWT.TGF[1:4, 1:5]
 
-knitr::kable(Tab.react_CAV1.CTRLvsWT.CTRL, booktabs = TRUE, caption = "Rutas biológicas significativamente expresadas en CAV1.CTRLvsWT.CTRL")
+knitr::kable(Tab.react_CAV1.CTRLvsWT.CTRL, booktabs = TRUE, caption = "Rutas biológicas significativamente expresadas en CAV1.CTRLvsWT.CTRL") %>%
+  kable_styling(latex_options="scale_down")
 
-knitr::kable(Tab.react_CAV1.TGFvsWT.TGF, booktabs = TRUE, caption = "Rutas biológicas significativamente expresadas en CAV1.TGFvsWT.TGF")
+knitr::kable(Tab.react_CAV1.TGFvsWT.TGF, booktabs = TRUE, caption = "Rutas biológicas significativamente expresadas en CAV1.TGFvsWT.TGF") %>%
+  kable_styling(latex_options="scale_down")
 ```
 
 Como se puede observar, la comparación CAV1.CTRLvsWT.CTRL tan solo tiene una ruta metabólica significativa, indicando que en principio la inhibición del gen CAV1 no parece tener elevadas consecuencias cuando no hay presencia de TGF-B, concretamente afectando únicamente a la ruta metabólica de la mitosis celular en las fases G1 y G1-S. Al contrario que en esta comparación, la comparación CAV1.TGFvsWT.TGF si que indica varias rutas metabólicas afectadas. Esto implica que hay diferencias significativas en la expresión de varias rutas metabólicas entre las células con el gen CAV1 silenciado y las células control cuando ambas son tratadas con TGF-B. Como la comparación entre la interacción entre ambas comparaciones sólo tenía un gen con una significación al 1% se entiende que no hay rutas metabólicas afectadas entre las comparaciones mencionadas.   
@@ -521,10 +502,10 @@ También podemos mostrar en un gráfico de redes los genes significativos que es
 
 ```{r, fig.cap="Gráfico de redes de la comparación CAV1.CTRLvsWT.CTRL ", echo=FALSE, hold_position = T}
 knitr::include_graphics("figures/cnetCAV1.CTRLvsWT.CTRL.PNG")
+
 ```
 
 Y el gráfico de redes de cada ruta metabólica para la comparación CAV1.TGFvsWT.TGF:
-
 
 
 ```{r, fig.cap="Gráfico de redes de la comparación CAV1.TGFvsWT.TGF ", echo=FALSE,hold_position = T}
