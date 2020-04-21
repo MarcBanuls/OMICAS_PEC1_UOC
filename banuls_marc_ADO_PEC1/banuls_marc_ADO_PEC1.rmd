@@ -44,6 +44,7 @@ dir.create("data")
 dir.create("results")
 ```
 
+El proyecto reproducible de este análisis se encuentra en un repositorio github. Para acceder a él se puede seguir este enlace: https://github.com/MarcBanuls/banuls_marc_PECS_OMICAS.git
 
 # Abstract
 
@@ -337,13 +338,9 @@ for (i in 1:length(listOfData)){
 }
 ```
 
-
-
 # Resultados   
 
-
 ## Control de calidad   
-
 
 ### Tablas resumen del análisis de outliers   
 
@@ -536,7 +533,7 @@ En la tabla de significación biológica de la comparación de los dos tipos dis
 
 # Apéndice
 
-Todo el código utilizado se encuentra en el archivo ".rmd" en el repositorio github de la PEC1. 
+Todo el código utilizado se encuentra en el archivo ".rmd" en el repositorio github de la PEC1.
 
 
 # References
